@@ -7,6 +7,8 @@ import domain.usecase.ContaUseCase;
 import infra.gateway.ContaGatewayLocal;
 import org.junit.*;
 
+import java.util.Optional;
+
 public class ContaUseCaseTest {
 
     private ContaUseCase contaUseCase;
@@ -89,5 +91,41 @@ public class ContaUseCaseTest {
     @Test
     public void testeExemplo1() {
         System.out.println("testeExemplo");
+    }
+
+    @Test
+    public void deveCriarContaCorretamente(){
+        System.out.println("deveCriarContaCorretamente");
+
+        Conta conta3 = new Conta("3", new Cliente("Carla", "222.222.222.22"));
+        contaUseCase.criarConta(conta3);
+
+        Conta conta3DB = contaGateway.findById(conta3.getId());
+        Assert.assertEquals(conta3, conta3DB);
+    }
+
+    @Test
+    public void deveEncontrarContaCorretamente(){
+        System.out.println("deveEncontrarContaCorretamente");
+
+        String id = "1";
+        Conta conta1DB = contaUseCase.buscarConta(id);
+        Assert.assertEquals(id, conta1DB.getId());
+    }
+
+    @Test
+    public void deveRealizarEmprestimoCorretamente() throws Exception {
+        System.out.println("deveRealizarEmprestimoCorretamente");
+
+        Conta conta1DB = contaGateway.findById("1");
+
+        Double valorEmprestimo = 1000.0;
+        Double saldoAnterior = conta1DB.getSaldo();
+
+        conta1DB.adicionarSaldoParaEmprestimo(valorEmprestimo);
+        contaUseCase.emprestimo(conta1DB.getId(), valorEmprestimo);
+
+        Double saldoNovo = conta1DB.getSaldo();
+        Assert.assertEquals((saldoAnterior + valorEmprestimo), saldoNovo, 0.1);
     }
 }
