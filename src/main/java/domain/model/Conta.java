@@ -50,15 +50,24 @@ public class Conta {
         return saldo;
     }
 
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
+
     public Double getSaldoDisponivelParaEmprestimo() {
         return saldoDisponivelParaEmprestimo;
+    }
+
+    public void setSaldoDisponivelParaEmprestimo(Double saldoDisponivelParaEmprestimo) {
+        this.saldoDisponivelParaEmprestimo = saldoDisponivelParaEmprestimo;
     }
 
     @Override
     public String toString() {
         return "Conta{" +
                 "id='" + id + '\'' +
-                ", cliente=" + cliente +
+                ", CPF=" + cliente.getCpf() +
+                ", Nome=" + cliente.getNome() +
                 ", saldo=" + saldo +
                 ", saldoDisponivelParaEmprestimo=" + saldoDisponivelParaEmprestimo +
                 '}';
