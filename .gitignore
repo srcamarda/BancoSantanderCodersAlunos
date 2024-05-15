@@ -1,2 +1,8 @@
-
-.idea/inspectionProfiles/Project_Default.xml
+.idea
+/.idea
+/target
+/build
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
