@@ -15,30 +15,22 @@ import java.sql.Connection;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        Connection connection = H2Connection.getConnection();
+//        Connection connection = H2Connection.getConnection();
+//        ContaGatewayDB contaGatewayDB = new ContaGatewayDB(connection);
+//        ContaGateway contaGateway = new ContaGatewayHttp();
+//        ContaUseCase contaUseCase = new ContaUseCase(contaGateway);
 
-        ContaGatewayDB contaGatewayDB = new ContaGatewayDB(connection);
-        //ContaGateway contaGateway = new ContaGatewayHttp();
-        //ContaUseCase contaUseCase = new ContaUseCase(contaGateway);
-
-        Cliente cliente = new Cliente("Ana", "111.111.111.11");
-        Conta conta1 = new Conta("1", cliente);
-
-        contaGatewayDB.save(conta1);
-        Conta conta = contaGatewayDB.findById("1");
-
-        if (conta != null) {
-            System.out.println("Conta encontrada:");
-            System.out.println(conta);
-        } else {
-            System.out.println("Conta não encontrada.");
-        }
-
-
-        /*
-        contaUseCase.criarConta(conta);
-        contaUseCase.depositar("1", 1000.0);
-
-        System.out.println(contaUseCase.buscarConta("1"));*/
+//        Cliente cliente = new Cliente("Ana", "111.111.111.11");
+//        Conta conta1 = new Conta("1", cliente);
+//
+//        contaGatewayDB.save(conta1);
+//        Conta conta = contaGatewayDB.findById("1");
+//
+//        if (conta != null) {
+//            System.out.println("Conta encontrada:");
+//            System.out.println(conta);
+//        } else {
+//            System.out.println("Conta não encontrada.");
+//        }
     }
 }

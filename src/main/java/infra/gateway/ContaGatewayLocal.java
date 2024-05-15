@@ -11,7 +11,7 @@ public class ContaGatewayLocal implements ContaGateway {
 
     @Override
     public Conta findById(String id) {
-        if(contas.containsKey(id)) {
+        if (contas.containsKey(id)) {
             return contas.get(id);
         }
 
@@ -21,5 +21,10 @@ public class ContaGatewayLocal implements ContaGateway {
     @Override
     public Conta save(Conta conta) {
         return contas.put(conta.getId(), conta);
+    }
+
+    @Override
+    public Conta update(Conta conta) {
+        return contas.replace(conta.getId(), conta);
     }
 }

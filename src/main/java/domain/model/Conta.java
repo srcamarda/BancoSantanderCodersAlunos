@@ -2,19 +2,26 @@ package domain.model;
 
 import domain.exception.SaldoInvalidoException;
 
+import java.util.Objects;
+
 public class Conta {
     private String id;
     private Cliente cliente;
     private Double saldo;
     private Double saldoDisponivelParaEmprestimo;
-    // Por hora vamos utilziar Double para valores em reais
-    // e no futuro vamos alterar para BigDecimal
 
     public Conta(String id, Cliente cliente) {
         this.id = id;
         this.cliente = cliente;
         this.saldo = 0.0;
         this.saldoDisponivelParaEmprestimo = 0.0;
+    }
+
+    public Conta(String id, Cliente cliente, Double saldo, Double saldoDisponivelParaEmprestimo) {
+        this.id = id;
+        this.cliente = cliente;
+        this.saldo = saldo;
+        this.saldoDisponivelParaEmprestimo = saldoDisponivelParaEmprestimo;
     }
 
     public void depositar(Double valor) {
@@ -30,8 +37,7 @@ public class Conta {
     }
 
     public void removerSaldoParaEmprestimo(Double valor) throws Exception {
-        // Exception
-        if(this.saldoDisponivelParaEmprestimo < valor) {
+        if (this.saldoDisponivelParaEmprestimo < valor) {
             throw new SaldoInvalidoException("Saldo para emprestimo inferior ao solicitado");
         }
 
@@ -71,5 +77,13 @@ public class Conta {
                 ", saldo=" + saldo +
                 ", saldoDisponivelParaEmprestimo=" + saldoDisponivelParaEmprestimo +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Conta conta = (Conta) obj;
+        return Objects.equals(id, conta.id);
     }
 }

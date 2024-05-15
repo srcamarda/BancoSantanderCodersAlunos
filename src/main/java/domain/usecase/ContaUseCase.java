@@ -5,7 +5,7 @@ import domain.model.Conta;
 
 public class ContaUseCase {
 
-    private ContaGateway contaGateway;
+    private final ContaGateway contaGateway;
 
     public ContaUseCase(ContaGateway contaGateway) {
         this.contaGateway = contaGateway;
@@ -29,8 +29,8 @@ public class ContaUseCase {
         contaOrigem.sacar(valor);
         contaDestino.depositar(valor);
 
-        contaGateway.save(contaOrigem);
-        contaGateway.save(contaDestino);
+        contaGateway.update(contaOrigem);
+        contaGateway.update(contaDestino);
     }
 
     public void depositar(String idConta, Double valor) throws Exception {
@@ -38,7 +38,7 @@ public class ContaUseCase {
         if (conta == null) throw new Exception("Conta invalida - [id: " + idConta + "]");
 
         conta.depositar(valor);
-        contaGateway.save(conta);
+        contaGateway.update(conta);
     }
 
     public void emprestimo(String idConta, Double valor) throws Exception {
@@ -50,7 +50,6 @@ public class ContaUseCase {
             conta.depositar(valor);
         }
 
-        contaGateway.save(conta);
+        contaGateway.update(conta);
     }
-
 }

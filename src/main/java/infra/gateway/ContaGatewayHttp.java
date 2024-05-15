@@ -15,4 +15,10 @@ public class ContaGatewayHttp implements ContaGateway {
         // Faz POST http para a app de contas
         return null;
     }
+
+    @Override
+    public Conta update(Conta conta) {
+        // Faz PUT http para a app de contas
+        return null;
+    }
 }
