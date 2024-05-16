@@ -6,7 +6,7 @@ import domain.model.Conta;
 import domain.usecase.ContaUseCase;
 import infra.database.H2Connection;
 import infra.gateway.ContaGatewayDB;
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
 
@@ -15,7 +15,7 @@ public class ContaUseCaseTest {
     private static ContaUseCase contaUseCase;
     private static ContaGateway contaGateway;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         Connection connection = H2Connection.getConnection();
         contaGateway = new ContaGatewayDB(connection);
@@ -33,7 +33,7 @@ public class ContaUseCaseTest {
         System.out.println("Before class");
     }
 
-    @Before
+    @BeforeEach
     public void before() {
         //Reseta contas entre testes
         Conta conta1 = contaGateway.findById("1");
@@ -51,12 +51,12 @@ public class ContaUseCaseTest {
         System.out.println("before");
     }
 
-    @After
+    @AfterEach
     public void after() {
         System.out.println("After");
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         System.out.println("After class");
     }
@@ -70,11 +70,13 @@ public class ContaUseCaseTest {
 
         Double valorEsperadoConta1 = 80.0;
         Conta conta1 = contaGateway.findById("1");
-        Assert.assertEquals(valorEsperadoConta1, conta1.getSaldo());
 
         Double valorEsperadoConta2 = 20.0;
         Conta conta2 = contaGateway.findById("2");
-        Assert.assertEquals(valorEsperadoConta2, conta2.getSaldo());
+
+        Assertions.assertAll("duasContasValidadas",
+                () -> Assertions.assertEquals(valorEsperadoConta1, conta1.getSaldo()),
+                () -> Assertions.assertEquals(valorEsperadoConta2, conta2.getSaldo()));
     }
 
     @Test
@@ -85,7 +87,7 @@ public class ContaUseCaseTest {
         Conta conta1 = contaGateway.findById("1");
 
         Double valorEsperado = 10.0;
-        Assert.assertEquals(valorEsperado, conta1.getSaldo());
+        Assertions.assertEquals(valorEsperado, conta1.getSaldo());
     }
 
     @Test
@@ -101,7 +103,7 @@ public class ContaUseCaseTest {
         contaUseCase.criarConta(conta3);
 
         Conta conta3DB = contaGateway.findById(conta3.getId());
-        Assert.assertEquals(conta3, conta3DB);
+        Assertions.assertEquals(conta3, conta3DB);
     }
 
     @Test
@@ -110,7 +112,7 @@ public class ContaUseCaseTest {
 
         String id = "1";
         Conta conta1 = contaUseCase.buscarConta(id);
-        Assert.assertEquals(id, conta1.getId());
+        Assertions.assertEquals(id, conta1.getId());
     }
 
     @Test
@@ -128,6 +130,6 @@ public class ContaUseCaseTest {
         contaUseCase.emprestimo(conta1.getId(), valorEmprestimo);
 
         Double saldoNovo = contaGateway.findById("1").getSaldo();
-        Assert.assertEquals((saldoAnterior + valorEmprestimo), saldoNovo, 0.1);
+        Assertions.assertEquals((saldoAnterior + valorEmprestimo), saldoNovo, 0.1);
     }
 }
